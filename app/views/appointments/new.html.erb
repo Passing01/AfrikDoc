@@ -1,0 +1,34 @@
+<h1>Prendre rendez-vous</h1>
+
+<%= form_with(model: @appointment, local: true) do |form| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@appointment.errors.count, "erreur") %> empêche(nt) la création du rendez-vous :</h2>
+
+      <ul>
+        <% @appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :doctor_id %>
+    <%= form.collection_select :doctor_id, @doctors, :id, :full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patient_id %>
+    <%= form.number_field :patient_id, value: current_patient.id, disabled: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
